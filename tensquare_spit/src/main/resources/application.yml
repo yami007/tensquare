@@ -1,0 +1,20 @@
+server: 
+  port: 9006
+spring: 
+  application:  
+    name: tensquare-spit #指定服务名
+  data:
+    mongodb:
+      host: 192.168.25.132
+      database: yami_2_db
+  redis:
+      database: 0
+      host: 192.168.25.132
+      port: 6379
+      password:
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://localhost:6868/eureka
+  instance:
+    prefer-ip-address: true #自定义服务名称信息
