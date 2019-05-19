@@ -17,6 +17,6 @@ eureka:
       defaultZone: http://localhost:6868/eureka
   instance:
     prefer-ip-address: true #自定义服务名称信息
-tensquare-base:
-  ribbon:
-    listOfServers: http://localhost:9001
+feign:
+  hystrix:
+    enabled: true
