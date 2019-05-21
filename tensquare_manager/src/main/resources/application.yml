@@ -9,7 +9,10 @@ eureka:
       defaultZone: http://localhost:6868/eureka
   instance:
     prefer-ip-address: true #自定义服务名称信息
-
+jwt:
+  config:
+    key: yami
+    ttl: 360000
 zuul:
   routes:
     tensquare-base: #基础

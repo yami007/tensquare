@@ -8,6 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import utils.IdWorker;
+import utils.JwtUtil;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -25,6 +26,9 @@ public class QaApplication {
 		return new IdWorker(1, 1);
 	}
 
-
+	@Bean
+	public JwtUtil jwtUtil(){
+		return new utils.JwtUtil();
+	}
 
 }
