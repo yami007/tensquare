@@ -42,8 +42,16 @@ public class WebFilter extends ZuulFilter{
         System.out.println("web网关过滤器启动");
         //向header中添加鉴权令牌
         RequestContext requestContext = RequestContext.getCurrentContext();
-        //获取header
+        //获取request
         HttpServletRequest request = requestContext.getRequest();
+        //跨域请求也得放行，跨域请求两次，第一次不带token（预请求），OPTIONS 第二次带token
+        if(request.getMethod().equals("OPTIONS")){
+            return null;
+        }
+        //如果是登录请求，直接放行
+        if(request.getRequestURL().toString().indexOf("/admain/login")>0){
+            return null;
+        }
         String authorization = request.getHeader("Authorization");
         //处理授权信息
         if(!StringUtils.isEmpty(authorization)&&authorization.startsWith("Bearer ")){
