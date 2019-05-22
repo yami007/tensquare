@@ -139,6 +139,9 @@
     <orderEntry type="library" name="Maven: com.netflix.hystrix:hystrix-core:1.5.12" level="project" />
     <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.9" level="project" />
     <orderEntry type="library" name="Maven: io.github.openfeign:feign-java8:9.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-config:2.0.0.M9" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-config-client:2.0.0.M9" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.3" level="project" />
     <orderEntry type="library" name="Maven: org.redisson:redisson:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.23.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.23.Final" level="project" />
@@ -153,7 +156,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.3" level="project" />
     <orderEntry type="library" name="Maven: net.openhft:zero-allocation-hashing:0.8" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.7.11" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-bean:3.7.1" level="project" />
