@@ -6,6 +6,8 @@ import com.tensquare.base.service.LableService;
 import entity.PageResult;
 import entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +17,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/label")
 @CrossOrigin
+@RefreshScope
 public class LabelController {
     @Autowired
     private LableService lableService;
+    @Value("${yami.ip}")
+    private String ip;
 
+    @RequestMapping(value = "/getIp",method = RequestMethod.GET)
+    public String getConfigIp(){
+        return ip;
+    }
     /**
      * 增加
      *
