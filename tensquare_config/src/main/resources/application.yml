@@ -1,0 +1,18 @@
+server:
+  port: 12000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+spring:
+  application:
+    name: tensquare-config  #指定服务名
+  rabbitmq:
+    host: 192.168.25.132
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/yami007/tensquareConfig.git
+
