@@ -14,8 +14,9 @@ spring:
   rabbitmq:
     host: 192.168.25.132
   redis:
-    host: 192.168.25.132
-    port: 6379
+    sentinel:
+      nodes: 192.168.25.132:26379,192.168.25.132:26380,192.168.25.132:26381
+      master: mymaster
 jwt:
   config:
     key: yami

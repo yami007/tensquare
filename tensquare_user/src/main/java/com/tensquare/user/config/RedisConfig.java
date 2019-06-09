@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisNode;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -22,14 +25,14 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Configuration
 @Cacheable
 public class RedisConfig extends CachingConfigurerSupport {
+    @Value("#{'${spring.redis.sentinel.nodes}'.split(',')}")
+    private List<String> nodes;
+
     @Autowired
     private  RedisTemplate redisTemplate;
 
@@ -66,11 +69,33 @@ public class RedisConfig extends CachingConfigurerSupport {
         return jedisPoolConfig;
     }
 
+    /**
+     * 配置RedisSentinelConfiguration
+     * @return
+     */
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig);
-        jedisConnectionFactory.setHostName("192.168.25.132");
-        jedisConnectionFactory.setPort(6379);
+    public RedisSentinelConfiguration sentinelConfiguration(){
+        RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration();
+        //配置matser的名称
+        redisSentinelConfiguration.master("mymaster");
+        //配置redis的哨兵sentinel
+        Set<RedisNode> redisNodeSet = new HashSet<>();
+        nodes.forEach(x->{
+            redisNodeSet.add(new RedisNode(x.split(":")[0],Integer.parseInt(x.split(":")[1])));
+        });
+        redisSentinelConfiguration.setSentinels(redisNodeSet);
+        return redisSentinelConfiguration;
+    }
+
+    /**
+     * 配置JedisConnectionFactory
+     * @param jedisPoolConfig
+     * @param sentinelConfiguration
+     * @return
+     */
+    @Bean
+    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig,RedisSentinelConfiguration sentinelConfiguration){
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(sentinelConfiguration,jedisPoolConfig);
         return jedisConnectionFactory;
     }
 /*

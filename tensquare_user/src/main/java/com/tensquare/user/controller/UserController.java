@@ -2,6 +2,7 @@ package com.tensquare.user.controller;
 
 import com.tensquare.user.pojo.User;
 import com.tensquare.user.service.UserService;
+import com.tensquare.user.utils.StringRedisUtil;
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
@@ -33,6 +34,23 @@ public class UserController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private StringRedisUtil stringRedisUtil;
+
+    @RequestMapping("/putBySentinelRedis")
+    public Boolean putBySentinelRedis(@RequestBody Map map) {
+        String key = (String) map.get("key");
+        String value = (String) map.get("value");
+        boolean set = stringRedisUtil.set(key, value);
+        return set;
+    }
+
+    @RequestMapping("/getBySentinelRedis")
+    public Object getBySentinelRedis(@RequestParam String key) {
+        Object value =  stringRedisUtil.get(key);
+        return value;
+    }
 
     /**
      * 查询全部数据
@@ -163,22 +181,24 @@ public class UserController {
 
     /**
      * 增加粉丝数
+     *
      * @param userid
      * @param x
      */
-    @RequestMapping(value = ("/incfans/{userid}/{x}"),method = RequestMethod.POST)
-    public void incFanscount(@PathVariable String userid,@PathVariable int x){
-        userService.incFanscount(userid,x);
+    @RequestMapping(value = ("/incfans/{userid}/{x}"), method = RequestMethod.POST)
+    public void incFanscount(@PathVariable String userid, @PathVariable int x) {
+        userService.incFanscount(userid, x);
     }
 
     /**
      * 变更关注数
+     *
      * @param userid
      * @param x
      */
-    @RequestMapping(value = ("/incFollow/{userid}/{x}"),method = RequestMethod.POST)
-    public void incFollowcount(@PathVariable String userid,@PathVariable int x){
-        userService.incFollowcount(userid,x);
+    @RequestMapping(value = ("/incFollow/{userid}/{x}"), method = RequestMethod.POST)
+    public void incFollowcount(@PathVariable String userid, @PathVariable int x) {
+        userService.incFollowcount(userid, x);
     }
 
 }
