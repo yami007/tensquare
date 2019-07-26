@@ -17,4 +17,8 @@ public class InterceptorConfigurer extends WebMvcConfigurationSupport{
                 .addPathPatterns("/**")   //需要拦截的路径
                 .excludePathPatterns("/**/login");  //不需要拦截的路径
     }
+
+    public static void main(String[] args) {
+
+    }
 }
